@@ -26,7 +26,7 @@ class Braking(State):
         if str(trafficlight.state) == "Green":
             return Driving()
         else:
-            return ErrorState()
+            return Car_ErrorState()
 
 class Driving(State):
     '''This represents a car driving on a green light. When the light turns yellow, it should change to Coasting. Else error.'''
@@ -34,17 +34,17 @@ class Driving(State):
         if str(trafficlight.state) == "Yellow":
             return Coasting()
         else:
-            return ErrorState()
+            return Car_ErrorState()
 
 class Coasting(State):
     '''This represents a car coasting for yellow light. When the light turns red, it should change to Braking. Else error.'''
     def on_event(self, trafficlight): 
-        if call_to_switch == "change":
-            return Red()
+        if str(trafficlight.state) == "Red":
+            return Braking()
         else:
-            return ErrorState()
+            return Car_ErrorState()
 
-class ErrorState(State):
+class Car_ErrorState(State):
     def on_event(self, trafficlight): 
         return Braking()                # we should default to braking when the light is broken
 

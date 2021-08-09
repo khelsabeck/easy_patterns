@@ -35,6 +35,11 @@ def test_green_state_type():
     state = Green()
     assert type(Green()) == type(state)
 
+def test_error_state_type():
+    '''This tests the error state. Expectation: It should be a State--Error type.'''
+    state = ErrorState()
+    assert type(ErrorState()) == type(state)
+
 def test_machine_init():
     '''This tests that the machine initializes correctly and has the right type'''
     machine = TrafficLight()
