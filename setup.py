@@ -7,7 +7,7 @@ setup (
     name='easy_patterns',
     version='0.0.1',
     description='A basic demonstrator for teaching design patterns.',
-    py_modules=["trafficlight_statemachine"],
+    py_modules=["trafficlight_statemachine", "car_statemachine"],
     package_dir={'':'src'}, 
     long_description=long_description,
     long_description_content_type="text/markdown",

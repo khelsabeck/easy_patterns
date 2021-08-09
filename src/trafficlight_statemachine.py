@@ -8,7 +8,6 @@ import time
 
 class State(ABC):
     '''This is the base class for a state. Each state holds the logic of when to transition to the next.'''
-
     def __init__(self):
         pass
 
@@ -27,42 +26,41 @@ class State(ABC):
 class Red(State):
     '''This represents a trafficlight being red. When called upon to change, it should change to green. Else error.'''
     def on_event(self, call_to_switch:str): 
-        if type(call_to_switch) == str and call_to_switch == "change":
+        if call_to_switch == "change":
             return Green()
         else:
             return ErrorState()
-        return self
 
 class Green(State):
     '''This represents a trafficlight being green. When called upon to change, it should change to yellow. Else error.'''
     def on_event(self, call_to_switch:str): 
-        if type(call_to_switch) == str and call_to_switch == "change":
+        if call_to_switch == "change":
             return Yellow()
         else:
             return ErrorState()
-        return self
 
 class Yellow(State):
     '''This represents a trafficlight being yellow. When called upon to change, it should change to red. Else error.'''
     def on_event(self, call_to_switch:str): 
-        if type(call_to_switch) == str and call_to_switch == "change":
+        if call_to_switch == "change":
             return Red()
         else:
             return ErrorState()
-        return self
 
 class ErrorState(State):
+    '''This is the basic error state for the traffic light.'''
     def on_event(self, call_to_switch:str): 
         return self
 
 #--------- The actual state machine itself:-----------------
-'''
-Call this in client code as such:
-from F_Record_FSM import FSM
-sm = FSM()
-sm.on_event(convictions)
-'''
 class TrafficLight:             #   This is the actual Finite State Machine
+    '''This is the state machine itself and this object can be called upon downstream to represent a traffic light that
+    switches to different states when the "change" value is included in state.on_event() as a parameter.
+
+    Call this in client code as such:
+    from trafficlight_statemachine import TrafficLight
+    light = TrafficLight()
+    light.on_event("change")'''
     def __init__(self):
         self.state = Red() #  starting state is now set as red
 
