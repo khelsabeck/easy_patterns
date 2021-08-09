@@ -12,13 +12,12 @@ def test_base_state():
 def test_base_state_abstractmethod():
     '''This should test that the base class method.'''
     with pytest.raises(Exception) as exc_info:
-        class TestState(State):
+        class TestState(State):     # creating an otherwise valid state (not the abc class but a child) without on_event()
             pass
-        state = TestState()  #   This should raise an exception because there is no implementation of the on_event method
+        state = TestState()  #   This should raise an exception 
     exception_raised = exc_info.value
     assert type(TypeError()) == type(exception_raised)
     assert "Can't instantiate abstract class TestState with abstract methods on_event" in str(exc_info.__dict__)
-
 
 def test_red_state_type():
     '''This tests the red state. Expectation: It should be a State--Red type.'''
@@ -61,6 +60,26 @@ def test_transitions_red_toError():
     assert type(Red()) == type(machine.state) 
     machine.on_event("bad input")
     assert type(ErrorState()) == type(machine.state)    # red to error
+
+def test_transitions_error_toError():
+    '''This tests the state machine transitions correctly (to error state with bad input and from error--> error with bad input).'''
+    machine = TrafficLight()
+    assert type(TrafficLight()) == type(machine) 
+    assert type(Red()) == type(machine.state) 
+    machine.on_event("bad input")
+    assert type(ErrorState()) == type(machine.state)    # red to error
+    machine.on_event("bad input")
+    assert type(ErrorState()) == type(machine.state)    # error to error with bad input
+
+def test_transitions_error_to_Red():
+    '''This tests the state machine transitions correctly (to error state with bad input and from error--> error with bad input).'''
+    machine = TrafficLight()
+    assert type(TrafficLight()) == type(machine) 
+    assert type(Red()) == type(machine.state) 
+    machine.on_event("bad input")
+    assert type(ErrorState()) == type(machine.state)    # red to error
+    machine.on_event("change")
+    assert type(Red()) == type(machine.state) 
 
 def test_transitions_green_toYellow():
     '''This tests the state machine transitions correctly.'''

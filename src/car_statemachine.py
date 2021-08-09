@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod     # this is not absolutely necessary, but 
 import typing                           # also not absolutely necessary, but typing gives clues re types
 import time
 
-class State(ABC):
+class CarState(ABC):
     '''This is the base class for a state. Each state holds the logic of when to transition to the next.'''
     def __init__(self):
         pass
@@ -20,33 +20,68 @@ class State(ABC):
         return self.__class__.__name__
 
 #------- These are the concrete states:------------------
-class Braking(State):
-    '''This represents a car braking for a red light. When the light turns green, it should change to Driving. Else error.'''
+class Braking(CarState):
+    '''This represents a car braking for a red light. When the light is green, the state should transition to driving. If it is yellow,
+    the state should transition to Coasting. If the light input is Red, it should stay in Braking. Else error.    '''
     def on_event(self, trafficlight): 
-        if str(trafficlight.state) == "Green":
-            return Driving()
-        else:
+        try:
+            if str(trafficlight.state) == "Green":
+                return Driving()
+            if str(trafficlight.state) == "Yellow":
+                return Coasting()
+            if str(trafficlight.state) == "Red":
+                return self
+            else:
+                return Car_ErrorState()
+        except:
             return Car_ErrorState()
 
-class Driving(State):
-    '''This represents a car driving on a green light. When the light turns yellow, it should change to Coasting. Else error.'''
+class Driving(CarState):
+    '''This represents a car driving on a green light. When the light turns yellow, it should change to Coasting. If it is Red, the state should transition to
+    Braking. If it is Green, the state should stay in driving state. Else error.'''
     def on_event(self, trafficlight): 
-        if str(trafficlight.state) == "Yellow":
-            return Coasting()
-        else:
+        try:
+            if str(trafficlight.state) == "Yellow":
+                return Coasting()
+            if str(trafficlight.state) == "Red":
+                return Braking()
+            if str(trafficlight.state) == "Green":
+                return self
+            else:
+                return Car_ErrorState()
+        except:
             return Car_ErrorState()
 
-class Coasting(State):
+class Coasting(CarState):
     '''This represents a car coasting for yellow light. When the light turns red, it should change to Braking. Else error.'''
     def on_event(self, trafficlight): 
-        if str(trafficlight.state) == "Red":
-            return Braking()
-        else:
+        try:
+            if str(trafficlight.state) == "Red":
+                return Braking()
+            if str(trafficlight.state) == "Green":
+                return Driving()
+            if str(trafficlight.state) == "Yellow":
+                return self
+            else:
+                return Car_ErrorState()
+        except:
             return Car_ErrorState()
 
-class Car_ErrorState(State):
+class Car_ErrorState(CarState):
+    '''This represents a car in an Error State--IE: a traffic light is either out or blinking red. If a normal input comes back, it transitions
+    to one of the regular operating states.'''
     def on_event(self, trafficlight): 
-        return Braking()                # we should default to braking when the light is broken
+        try:
+            if str(trafficlight.state) == "Red":
+                return Braking()
+            if str(trafficlight.state) == "Yellow":
+                return Coasting()
+            if str(trafficlight.state) == "Green":
+                return Driving()
+            else:
+                return self
+        except:
+            return self
 
 #--------- The actual state machine itself:-----------------
 class Car:             #   This is the actual Finite State Machine

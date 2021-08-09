@@ -14,7 +14,6 @@ class State(ABC):
     @abstractmethod
     def on_event(self, call_to_switch: str): 
         '''When it is necessary to switch, this takes the call_to_switch and directs the light to change states.'''
-        pass
 
     def __repr__(self):
         return self.__str__()
@@ -50,7 +49,10 @@ class Yellow(State):
 class ErrorState(State):
     '''This is the basic error state for the traffic light.'''
     def on_event(self, call_to_switch:str): 
-        return self
+        if call_to_switch == "change":
+            return Red()
+        else:
+            return ErrorState()
 
 #--------- The actual state machine itself:-----------------
 class TrafficLight:             #   This is the actual Finite State Machine
