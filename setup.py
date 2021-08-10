@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup (
     name='easy_patterns',
-    version='0.0.1',
+    version='0.0.2',
     description='A basic demonstrator for teaching design patterns.',
     py_modules=["trafficlight_statemachine", "car_statemachine", "crosswalk"],
     package_dir={'':'src'}, 
@@ -19,7 +19,8 @@ setup (
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    url="",
+    url="https://github.com/khelsabeck/easy_patterns.git",
+    download_url = 'https://github.com/khelsabeck/easy_patterns/archive/refs/tags/easy_patterns.tar.gz',
     author="Keith Helsabeck",
     author_email="admin@mylawdb.com",
 )
