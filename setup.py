@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup (
     name='easy_patterns',
-    version='0.1.0',
+    version='0.0.2',
     description='A basic demonstrator for teaching design patterns.',
     py_modules=["trafficlight_statemachine", "car_statemachine", "crosswalk"],
     package_dir={'':'src'}, 
