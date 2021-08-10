@@ -20,7 +20,7 @@ setup (
         "Operating System :: OS Independent",
     ],
     url="https://github.com/khelsabeck/easy_patterns.git",
-    download_url = 'https://github.com/khelsabeck/easy_patterns/archive/refs/tags/easy_patterns.tar.gz',
+    download_url = 'https://github.com/khelsabeck/easy_patterns/archive/refs/tags/easy_patterns0.0.2.tar.gz',
     author="Keith Helsabeck",
     author_email="admin@mylawdb.com",
 )
