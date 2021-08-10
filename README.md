@@ -6,6 +6,7 @@ This package has the module crosswalk, with the principal function 'crosswalk.si
 It also has the state machines themselves and their respective states Car: [ CarState, Braking, Driving, Coasting, Car_ErrorState ], 
 and TrafficLight: [ State, Red, Green, Yellow, ErrorState ]. Feel free to poke around in the source code or borrow/fork it if you want a basic state
 machine for your own project.
+If you installed this via PyPI, call "import crosswalk.simulate_crosswalk, trafficlight_statemachine.TrafficLight, car_statemachine.Car". After doing so, open a terminal and run "crosswalk.simulate_crosswalk()" in your Python REPL. 
 
 __GOAL:__
 This is a simple repo for showing how to use certain design patterns in Python. The intent is to use software best practices and show an easy to copy demostration of the finite state machine (FSM) pattern using a simulation of a car interacting with a traffic light. 
